@@ -1,0 +1,54 @@
+<table class="history" style="">
+    <tr class="head">
+        <td>
+            WHEN
+        </td>
+        <td>
+            СOMMENT / WHAT 
+        </td>
+        <td>
+            REMOVED
+        </td>
+        <td>
+            ADDED
+        </td>
+    </tr>
+    <% for t in @table %>
+    <!-- when&who -->
+    <tr class="whenwho">
+        <td colspan="4"<%= "style='color: red'" if (t.when.to_time>DateTime.now-10) %>>
+            <u>
+                <%=time_ago_in_words t.when %>, <b><%=t.who %></b>
+            </u>
+        </td>
+    </tr>
+    <% if t.comment == 1 %>
+    <tr>
+        <td>
+            &nbsp;
+        </td>
+        <td colspan="3">
+            <%=simple_format h t.text %>
+        </td>
+    </tr>
+    <% else %>
+    <!-- changes -->
+    <% for c in t.changes %>
+    <tr>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            <%= c["field_name"] %>
+        </td>
+        <td>
+            <%= c["removed"] %>
+        </td>
+        <td>
+            <%= c["added"] %>
+        </td>
+    </tr>
+    <% end # for changes %>
+    <% end # if comment %>
+    <% end # for table %>
+</table>

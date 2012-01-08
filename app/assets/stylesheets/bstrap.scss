@@ -1,0 +1,8 @@
+$gridColumns: 16;
+$gridColumnWidth: 60px;
+$gridGutterWidth: 20px;
+
+@import "bootstrap"; /* Use this to get all of Bootstrap's @mixins and $variables */
+
+
+body {padding-top: 45px;}

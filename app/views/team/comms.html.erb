@@ -1,0 +1,27 @@
+<table class="comments">
+    <tr class="head">
+        <td width="30">
+            WHEN
+        </td>
+        <td>
+            COMMENT
+        </td>
+    </tr>
+    <% for t in @table %>
+    <tr class="whenwho">
+        <td colspan="2"<%= "style='color: red'" if (t.when.to_time>DateTime.now-10) %>>
+            <u>
+                <%=time_ago_in_words t.time %>, <b><%=t.author %></b>
+            </u>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            <%=simple_format h t.text %>
+        </td>
+    </tr>
+    <% end %>
+</table>
