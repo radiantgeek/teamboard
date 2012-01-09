@@ -12,7 +12,7 @@ class SprintController < ApplicationController
     _init
 
     @sprint = Sprint.find_by_name(params[:sprint]) if params[:sprint]
-    @sprint = Release.actived.first unless @sprint
+    @sprint = Sprint.actived.first unless @sprint
     @previous = @sprint.previous
     @release = @sprint.release
 
