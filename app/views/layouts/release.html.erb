@@ -34,14 +34,14 @@
 <div class="container-fluid">
   <div class="sidebar">
     <div class="well">
-      <% visibleTabs.each do |t| %>
-          <h5><a href="/<%= t.name %>/"><%= t.title %></a></h5>
-          <% if t.is_showed %>
+      <% releases.each do |r| %>
+          <h5><a href="/release/<%= r.name %>/"><%= r.title %></a></h5>
+          <% if (@release && @release.id==r.id) %>
               <ul>
-                <% t.metrics.each do |m|
-                  flag = (m.id == @metric.id) ? ' class="disabled"' : '' if @metric
+                <% r.sprints.each do |s|
+                  flag = (s.id == @sprint.id) ? ' class="label"' : '' if @sprint
                 %>
-                    <li<%= raw flag %>><a href="/<%= t.name %>/<%= m.name %>/"><%= m.title %></a></li>
+                    <li<%= raw flag %>><a href="/sprint/<%= s.name %>/"><%= s.title %></a></li>
                 <% end %>
               </ul>
           <% end %>
@@ -66,7 +66,9 @@
 </div>
 
 <script>
-    $(document).ready(function () { initSync(); });
+    $(document).ready(function () {
+        initSync();
+    });
 </script>
 </body>
 </html>

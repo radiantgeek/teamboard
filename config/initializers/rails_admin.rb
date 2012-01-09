@@ -80,6 +80,19 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model Sprint do
+    edit do
+      field :name
+      field :title
+      field :description
+      field :build
+      field :start
+      field :stop
+      field :release_name
+      field :active
+    end
+  end
+
 
   # Your model's configuration, to help you get started:
 

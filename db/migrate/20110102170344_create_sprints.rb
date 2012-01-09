@@ -4,7 +4,7 @@ class CreateSprints < ActiveRecord::Migration
       t.string :name
       t.string :title
       t.string :build
-      t.string :release
+      t.string :release_name
       t.string :description
       t.date :start
       t.date :stop

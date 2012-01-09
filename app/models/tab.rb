@@ -7,4 +7,8 @@ class Tab < ActiveRecord::Base
   scope :visible, :conditions => ["is_showed = ?", true]
 
   default_scope :order => "pos ASC"
+
+  def to_s
+    title
+  end
 end

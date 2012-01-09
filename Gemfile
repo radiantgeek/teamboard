@@ -1,5 +1,8 @@
 source 'http://rubygems.org'
 
+# weird stuff for linux: see http://stackoverflow.com/questions/6282307/rails-3-1-execjs-and-could-not-find-a-javascript-runtime
+gem 'therubyracer', :platforms => :ruby
+
 gem 'rails', '3.1.3'
 
 # Bundle edge Rails instead:

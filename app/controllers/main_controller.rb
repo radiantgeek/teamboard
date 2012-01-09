@@ -14,19 +14,10 @@ class MainController < ApplicationController
     end
   end
 
-  # redirect to bugzilla
-  def link
-    _init()
-    @all = _findBugs
-
-    ids = @all.collect { |b| b.id }
-    url = bugzillaUrl + "buglist.cgi?quicksearch=" + ids.join("+")
-
-    redirect_to url
-  end
-
   def tab
-    _initTab()
+    _initTab
+
+    @tab.metrics.each { |m| m.metricClass=@worker.get(m.name) } # link with worker
 
     respond_to do |format|
       format.html # tab.html.erb
@@ -34,7 +25,7 @@ class MainController < ApplicationController
   end
 
   def metric
-    _init()
+    _init
 
     @ajax = "/"+@tab.name+"/"+@metric.name+".json"
     @columns = @metric.columns
@@ -47,10 +38,40 @@ class MainController < ApplicationController
     end
   end
 
+  # redirect to bugzilla
+  def link
+    _init
+    @all = _findBugs
+
+    ids = @all.collect { |b| b.id }
+    url = bugzillaUrl + "buglist.cgi?quicksearch=" + ids.join("+")
+
+    redirect_to url
+  end
+
+  # historical data for diagrams
+  def data
+    _init
+
+    respond_to do |format|
+      format.xml { render xml: _data }
+      format.json { render json: _data }
+    end
+  end
+
   private
+
+  def _data
+    res = Array.new
+    all = MetricData.by_metric(@metric.id)
+    all.each { |a| res.push([a.time.to_time.to_i*1000, a.res]) }
+
+    {"key" => @metric.tab_name+"/"+@metric.name, "label" => @metric.title + " =  000.00", "data" => res, "color" => @metric.color}
+  end
 
   def _initTab()
     ActiveRecord::Base.logger = Logger.new(STDERR)
+    @worker = Workers.new # should be singleton
 
     @tab = Tab.find_by_name(params[:tab])
   end
@@ -59,15 +80,12 @@ class MainController < ApplicationController
     _initTab()
     @metric = Metric.where(:tab_name => @tab.name, :name => params[:metric]).first
 
-    @worker = Workers.new # should be singleton
     @metric.metricClass=@worker.get(@metric.name) # link with worker
   end
 
   # all bugs for metric
   def _findBugs
-    Bug.includes(:qa_contact, :reporter, :assigned_to).
-        joins(:qa_contact, :reporter, :assigned_to).
-        where(@metric.whereClause)
+    @metric.return_scope
   end
 
   def readDataTableParameters

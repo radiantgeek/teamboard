@@ -7,4 +7,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+// before dashboard and jquery.flot.crosshair
+//= require jquery.flot
 //= require_tree .

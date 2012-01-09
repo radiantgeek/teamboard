@@ -1,7 +1,6 @@
 require 'utils'
 
 module Searches
-
   # base class for metrics
   class CalcMetric
     attr_reader :name
@@ -10,18 +9,12 @@ module Searches
       @name = name
     end
 
-    def metric=(cache)
-      @metric = cache;
-    end
-
-    def metric
-      return @metric unless (@metric == nil)
-      @metric = Metric.find_by_name(name);
-    end
-
-
     def calc
-      Bug.where(where).count
+      scope.count
+    end
+
+    def scope
+      Bug.conditional(where)
     end
 
     # abstract method: get where condition for search by type id

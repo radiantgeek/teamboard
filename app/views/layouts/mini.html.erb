@@ -31,42 +31,6 @@
   </div>
 </div>
 
-<div class="container-fluid">
-  <div class="sidebar">
-    <div class="well">
-      <% visibleTabs.each do |t| %>
-          <h5><a href="/<%= t.name %>/"><%= t.title %></a></h5>
-          <% if t.is_showed %>
-              <ul>
-                <% t.metrics.each do |m|
-                  flag = (m.id == @metric.id) ? ' class="disabled"' : '' if @metric
-                %>
-                    <li<%= raw flag %>><a href="/<%= t.name %>/<%= m.name %>/"><%= m.title %></a></li>
-                <% end %>
-              </ul>
-          <% end %>
-      <% end %>
-
-    </div>
-  </div>
-
-  <div class="content">
-    <div class="row">
-      <div class="span18">
-
-        <%= yield %>
-
-      </div>
-    </div>
-
-    <footer>
-      <p>&copy; radiant</p>
-    </footer>
-  </div>
-</div>
-
-<script>
-    $(document).ready(function () { initSync(); });
-</script>
+<%= yield %>
 </body>
 </html>

@@ -25,6 +25,7 @@ app/models/bug.rb
 config/bugzilla.yml
 config/database.yml
 db/schema.rb
+lib/converter.rb
 lib/settings.rb
 lib/workers.rb
 lib/workers_utils.rb

@@ -3,7 +3,6 @@ require 'bugzilla'
 class TeamController < ApplicationController
   respond_to :html, :json
 
-
   def comments
     @title = "#"+params["bug"]+" comments"
     comms = Bugzilla::Bugzilla.instance.comments(params["bug"])
@@ -28,7 +27,7 @@ class TeamController < ApplicationController
 
   #
   def printMini(table, template)
-    @table = table.sort_by { |a| a.when.to_time }.reverse
+    @table = table.sort_by { |a| a[:when].to_time }.reverse
     render :template => 'team/'+template, :layout => 'mini'
   end
 

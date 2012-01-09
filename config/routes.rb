@@ -3,19 +3,21 @@ Teamboard::Application.routes.draw do
   devise_for :admins
 
   root :to => "main#index"
-  match 'metrics/' => 'main#metrics', :as => :metrics
 
   match "sync/" => "sync#sync", :as => :sync
   match "calc/" => "sync#calc", :as => :calc
 
   match "sprint" => "sprint#sprint", :as => :sprint
+  match "sprint/:sprint" => "sprint#sprint"
   match "release" => "sprint#release", :as => :release
+  match "release/:release" => "sprint#release"
 
   match "history/:bug" => "team#history", :as => :history
   match "changes/:bug" => "team#changes", :as => :changes
   match "comments/:bug" => "team#comments", :as => :comments
 
   match ':tab/:metric/link' => 'main#link', :as => :link_metric
+  match ':tab/:metric/data' => 'main#data', :as => :data_metric
   match ':tab/:metric' => 'main#metric', :as => :show_metric
   match ':tab' => 'main#tab', :as => :show_tab
 

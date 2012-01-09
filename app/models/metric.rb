@@ -15,12 +15,16 @@ class Metric < ActiveRecord::Base
     @metric_class.ar_fields
   end
 
-  def view(bug)
-    @metric_class.view(bug)
+  def return_scope
+    @metric_class.scope
   end
 
-  def whereClause
-    @metric_class.where
+  def calculate_count
+    @metric_class.calc
+  end
+
+  def view(bug)
+    @metric_class.view(bug)
   end
 
   # link with worker
@@ -28,4 +32,11 @@ class Metric < ActiveRecord::Base
     @metric_class = metric_class
   end
 
+  def metricClass
+    @metric_class
+  end
+
+  def to_s
+    title
+  end
 end

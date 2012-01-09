@@ -1,0 +1,80 @@
+<h1><%= @release.title %></h1>
+<h2>Burndown chart</h2>
+
+<table id="releasetable">
+  <tr>
+    <td width="60%" colspan="2" valign="top">
+      <div id="burndown" style="width:700px;height:300px; border: 1px solid gray;"/>
+    </td>
+    <td valign="top">
+
+      <table class="bordered-table zebra-striped" id="releasedata">
+        <thead>
+        <tr>
+          <th>Start</th>
+          <th>Stop [plan]</th>
+          <th color="red">Stop [actual]</th>
+        </tr>
+        </thead>
+        <tr>
+          <td><%= @release.start %></td>
+          <td><%= @release.plan_stop %></td>
+          <td color="red"><%= @release.stop %></td>
+        </tr>
+      </table>
+
+      <table class="bordered-table zebra-striped" id="bugsdata">
+        <thead>
+        <tr>
+          <th>Team</th>
+          <th>plan</th>
+          <th>fixed</th>
+          <th>solved</th>
+          <th>unfixed</th>
+        </tr>
+        </thead>
+
+        <tr>
+          <td>Total</td>  <%= tdval "plan" %>       <%= tdval "fixed" %>      <%= tdval "solved" %>       <%= tdval "unfixed" %>
+        </tr>
+        <tr>
+          <td>Java</td>   <%= tdval "planjava" %>   <%= tdval "fixedjava" %>  <%= tdval "solvedjava" %>  <%= tdval "unfixedjava" %>
+        </tr>
+        <tr>
+          <td>Oracle</td> <%= tdval "planoracle" %><%= tdval "fixedoracle" %> <%= tdval "solvedoracle" %><%= tdval "unfixedoracle" %>
+        </tr>
+        <tr>
+          <td>C++</td>    <%= tdval "plancpp" %>    <%= tdval "fixedcpp" %>   <%= tdval "solvedcpp" %>   <%= tdval "unfixedcpp" %>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="30%" valign="top">
+      <h3>Burndown chart [Java]</h3>
+
+      <div id="burndownjava" style="width:400px;height:200px; border: 1px solid gray;"/>
+    </td>
+    <td width="30%" valign="top">
+      <h3>Burndown chart [Oracle]</h3>
+
+      <div id="burndownoracle" style="width:400px;height:200px; border: 1px solid gray;"/>
+    </td>
+    <td valign="top">
+      <h3>Burndown chart [C++]</h3>
+
+      <div id="burndowncpp" style="width:400px;height:200px; border: 1px solid gray;"/>
+    </td>
+  </tr>
+</table>
+<br/>
+
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+//        installKeyPlot('burndown', ['plan', 'fixed', 'solved', 'unfixed']);
+//        installSmallKeyPlot('burndownjava', ['planjava', 'fixedjava', 'solvedjava', 'unfixedjava']);
+//        installSmallKeyPlot('burndownoracle', ['planoracle', 'fixedoracle', 'solvedoracle', 'unfixedoracle']);
+//        installSmallKeyPlot('burndowncpp', ['plancpp', 'fixedcpp', 'solvedcpp', 'unfixedcpp']);
+    });
+</script>

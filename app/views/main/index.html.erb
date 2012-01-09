@@ -3,10 +3,13 @@
 </ul>
 
 <div class="hero-unit">
-  <h1>Welcome to Teamboard!</h1>
+  <h2>Welcome to Teamboard!</h2>
 
-  <p>Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit
-    aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+  <p>Quick overview through situation on your Bugzilla</p>
 
-  <p><a class="btn primary large">Learn more »</a></p>
+  <p>
+    <% allTabs.each do |t| %>
+        <a href="/<%= t.name %>/" class="btn primary large"><%= t.title %> »</a>
+    <% end %>
+  </p>
 </div>
