@@ -43,9 +43,9 @@ module Searches
 
     # data for
     def view(bug)
-      [bug._link, bug.assigned_to,
-       bug._priority, bug.milestone, bug.summary,
-       bug._historyLink, bug.status+" <i>"+bug.resolution+"</i>"]
+      [bug.html_link, bug.assigned_to,
+       bug.html_priority, bug.milestone, bug.summary,
+       bug.html_historyLink, bug.status+" <i>"+bug.resolution+"</i>"]
     end
 
     def where

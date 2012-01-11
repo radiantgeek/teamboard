@@ -1,66 +1,74 @@
 <h3>Sprint <%= @sprint %></h3>
 
 <div style="padding: 10px">
-<table id="kanban" class="bordered-table" width="100%">
-  <thead>
-  <tr>
-    <th>
-      Planned&nbsp;(<%= @planned.size %>)
-    </th>
-    <th class="reopen">
-      Reopen&nbsp;(<%= @reopen.size %>)
-    </th>
-    <th>
-      Need info&nbsp;(<%= @needinfo.size %>)
-    </th>
-    <th>
-      In&nbsp;progress&nbsp;(<%= @progress.size %>)
-    </th>
-    <th>
-      Review&nbsp;(<%= @review.size %>)
-    </th>
-    <th>
-      Resolved&nbsp;(<%= @resolved.size %>)
-    </th>
-    <th>
-      Testing&nbsp;(<%= @testing.size %>)
-    </th>
-    <th>
-      Verified&nbsp;(<%= @verified.size %>)
-    </th>
-    <th>
-      Closed&nbsp;(<%= @closed.size %>)
-    </th>
-  </tr>
-  </thead>
-  <tr>
-    <td valign="top">
-      <%= render :partial => "bug", :collection => @planned, :as => :bug %>
-    </td>
-    <td valign="top" style="border-left: 1px solid #C77405; border-right: 1px solid #C77405;">
-      <%= render :partial => "bug", :collection => @reopen, :as => :bug %>
-    </td>
-    <td valign="top" style="border-left: 1px solid blue; border-right: 1px solid blue;">
-      <%= render :partial => "bug", :collection => @needinfo, :as => :bug %>
-    </td>
-    <td valign="top">
-      <%= render :partial => "bug", :collection => @progress, :as => :bug %>
-    </td>
-    <td valign="top">
-      <%= render :partial => "bug", :collection => @review, :as => :bug %>
-    </td>
-    <td valign="top">
-      <%= render :partial => "bug", :collection => @resolved, :as => :bug %>
-    </td>
-    <td valign="top">
-      <%= render :partial => "bug", :collection => @testing, :as => :bug %>
-    </td>
-    <td valign="top">
-      <%= render :partial => "bug", :collection => @verified, :as => :bug %>
-    </td>
-    <td valign="top">
-      <%= render :partial => "bug", :collection => @closed, :as => :bug %>
-    </td>
-  </tr>
-</table>
+  <table id="kanban" class="bordered-table" width="100%">
+    <thead>
+    <tr>
+      <th>
+        Planned&nbsp;(<%= @planned.size %>)
+      </th>
+      <% if @reopen.size>0 %>
+          <th class="reopen" style="background-color: rgba(199,171,20, 0.5)">
+            Reopen&nbsp;(<%= @reopen.size %>)
+          </th>
+      <% end %>
+      <% if @needinfo.size>0 %>
+          <th style="background-color: rgba(32,79,199,0.48)">
+            Need info&nbsp;(<%= @needinfo.size %>)
+          </th>
+      <% end %>
+      <th>
+        In&nbsp;progress&nbsp;(<%= @progress.size %>)
+      </th>
+      <th>
+        Review&nbsp;(<%= @review.size %>)
+      </th>
+      <th>
+        Resolved&nbsp;(<%= @resolved.size %>)
+      </th>
+      <th>
+        Testing&nbsp;(<%= @testing.size %>)
+      </th>
+      <th>
+        Verified&nbsp;(<%= @verified.size %>)
+      </th>
+      <th>
+        Closed&nbsp;(<%= @closed.size %>)
+      </th>
+    </tr>
+    </thead>
+    <tr>
+      <td valign="top">
+        <%= render :partial => "bug", :collection => @planned, :as => :bug %>
+      </td>
+      <% if @reopen.size>0 %>
+          <td valign="top" style="border-left-color: rgb(199,171,20); border-right-color: rgb(199,171,20)">
+            <%= render :partial => "bug", :collection => @reopen, :as => :bug %>
+          </td>
+      <% end %>
+      <% if @needinfo.size>0 %>
+          <td valign="top" style="border-left-color: rgb(32,79,199); border-right-color: rgb(32,79,199)">
+            <%= render :partial => "bug", :collection => @needinfo, :as => :bug %>
+          </td>
+      <% end %>
+      <td valign="top">
+        <%= render :partial => "bug", :collection => @progress, :as => :bug %>
+      </td>
+      <td valign="top">
+        <%= render :partial => "bug", :collection => @review, :as => :bug %>
+      </td>
+      <td valign="top">
+        <%= render :partial => "bug", :collection => @resolved, :as => :bug %>
+      </td>
+      <td valign="top">
+        <%= render :partial => "bug", :collection => @testing, :as => :bug %>
+      </td>
+      <td valign="top">
+        <%= render :partial => "bug", :collection => @verified, :as => :bug %>
+      </td>
+      <td valign="top">
+        <%= render :partial => "bug", :collection => @closed, :as => :bug %>
+      </td>
+    </tr>
+  </table>
 </div>

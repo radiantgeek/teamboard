@@ -4,7 +4,8 @@ class CreateTabs < ActiveRecord::Migration
       t.string :name
       t.string :title
       t.integer :pos
-      t.boolean :is_showed
+      t.boolean :is_showed, :default => false
+      t.boolean :show_on_sidebar, :default => false
 
       t.timestamps
     end

@@ -6,12 +6,12 @@ module ApplicationHelper
     Release.includes(:sprints)
   end
 
-  def visibleTabs
-    Tab.visible.includes(:metrics)
+  def sidebarTabs
+    Tab.sidebar.includes(:metrics)
   end
 
   def allTabs
-    Tab.includes(:metrics)
+    Tab.visible.includes(:metrics)
   end
 
   def quickLinks
@@ -20,15 +20,15 @@ module ApplicationHelper
 
   def tdval(metric)
 
-    m = Metric.find_by_name(metric + @release._metric)
+    m = Metric.find_by_name(metric + @release._metric) if @release
 
-    if m.nil?
-      c = "-"
-    else
-      m.metricClass=@worker.get(m.name) unless m.metricClass # link with worker
-      c = m.calculate_count.to_s
+    c = "-"
+    if m
+      cl=@worker.get(m.name) unless m.metricClass # link with worker
+      m.metricClass=cl
+      c = m.calculate_count.to_s if cl
     end
 
-    raw "<td>"+c+"</td>"
+    raw "<td><a href='"+m.tab_name+"/"+m.name+"/'>"+c+"</a></td>"
   end
 end

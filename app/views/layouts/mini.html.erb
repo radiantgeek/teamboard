@@ -1,36 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Teamboard</title>
-
-  <%= stylesheet_link_tag "application" %>
-
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<div class="topbar" data-scrollspy="scrollspy">
-  <div class="topbar-inner">
-
-    <div class="container">
-      <a class="brand" href="/">Teamboard</a>
-      <ul class="nav">
-        <% quickLinks.each do |q| %>
-            <li><a href="<%= q.link %>" target="_blank"><%= q.name %></a></li>
-            <li> &nbsp; </li>
-        <% end %>
-      </ul>
-
-      <form class="pull-left" name="quickbug" id="quickbug" action="<%= bugzillaUrl %>buglist.cgi" target="_blank">
-        <input name="quicksearch" type="text" placeholder="Search @ bugzilla">
-      </form>
-
-      <a id="sync" alt="/sync/" data-title="Synchronization" data-placement="below" rel="popover" class="pull-right btn active" href="#">Synchronize</a>
-    </div>
-  </div>
-</div>
+<%= render :partial => "shared/header" %>
 
 <%= yield %>
-</body>
-</html>
+
+<%= render :partial => "shared/footer" %>

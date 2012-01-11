@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Teamboard</title>
-
-  <%= stylesheet_link_tag "application" %>
-
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<div class="topbar" data-scrollspy="scrollspy">
-  <div class="topbar-inner">
-
-    <div class="container">
-      <a class="brand" href="/">Teamboard</a>
-      <ul class="nav">
-        <% quickLinks.each do |q| %>
-            <li><a href="<%= q.link %>" target="_blank"><%= q.name %></a></li>
-            <li> &nbsp; </li>
-        <% end %>
-      </ul>
-
-      <form class="pull-left" name="quickbug" id="quickbug" action="<%= bugzillaUrl %>buglist.cgi" target="_blank">
-        <input name="quicksearch" type="text" placeholder="Search @ bugzilla">
-      </form>
-
-      <a id="sync" alt="/sync/" data-title="Synchronization" data-placement="below" rel="popover" class="pull-right btn active" href="#">Synchronize</a>
-    </div>
-  </div>
-</div>
+<%= render :partial => "shared/header" %>
 
 <div class="container-fluid">
   <div class="sidebar">
@@ -39,7 +8,7 @@
           <% if (@release && @release.id==r.id) %>
               <ul>
                 <% r.sprints.each do |s|
-                  flag = (s.id == @sprint.id) ? ' class="label"' : '' if @sprint
+                  flag = (s.id == @sprint.id) ? ' class="label warning"' : '' if @sprint
                 %>
                     <li<%= raw flag %>><a href="/sprint/<%= s.name %>/"><%= s.title %></a></li>
                 <% end %>
@@ -65,10 +34,4 @@
   </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        initSync();
-    });
-</script>
-</body>
-</html>
+<%= render :partial => "shared/footer" %>

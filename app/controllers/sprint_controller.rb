@@ -12,8 +12,13 @@ class SprintController < ApplicationController
     _init
 
     @sprint = Sprint.find_by_name(params[:sprint]) if params[:sprint]
-    @sprint = Sprint.actived.first unless @sprint
-    @previous = @sprint.previous
+    if @sprint
+	@build = @sprint.build
+	@build = @sprint.previous.build if @sprint.active
+    else
+	@sprint = Sprint.actived.first 
+	@build = @sprint.previous.build 
+    end
     @release = @sprint.release
 
     # 1. !!! График по времени  burndown (сколько багов осталось)
@@ -54,9 +59,15 @@ class SprintController < ApplicationController
     # цвет для критичности
     # цвета разным компонентам?
 
+    if @sprint.active
+   	@reopen = all(reopen()+fromJava()) + all(reopen+getJava())
+	@needinfo = all(needinfodevtest()+fromJava()) + all(needinfodevtest()+getJava())
+    else
+	@reopen = []
+	@needinfo = []
+    end
+
     @planned = onlySprint(accepted())
-    @reopen = all(reopen()+fromJava()) + all(reopen+getJava())
-    @needinfo = all(needinfo()+fromJava()) + all(needinfo()+getJava())
     @progress = onlySprint(progress())
     @review = onlySprint(review())
     @resolved = onlySprint(workDone())
@@ -71,6 +82,6 @@ class SprintController < ApplicationController
 
   def onlySprint(cond)
     r = milestone(@release.version)
-    bugs(r+getJava()+releasedAt(@sprint.title)+cond) + bugs(r+getJava()+releasedAt(@previous.build)+cond)
+    bugs(r+getJava()+releasedAt(@sprint.title)+cond) + bugs(r+getJava()+releasedAt(@build)+cond)
   end
 end

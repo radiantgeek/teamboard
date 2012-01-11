@@ -1,6 +1,6 @@
 function initSync() {
     $("#sync")
-        .twipsy({ trigger:"manual", html:true, animate:true })
+        .popover({ trigger:"manual", html:true, animate:true })
         .click(function () {
             var  el   = $(this);
             var _data = el.attr('alt');
@@ -9,7 +9,7 @@ function initSync() {
                 success:function (data) {
                     el.attr('data-content', data);
                     el.attr('trigger', "hover");
-                    el.twipsy('show');
+                    el.popover('show');
                 }
             });
         });
