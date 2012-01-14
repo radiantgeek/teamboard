@@ -8,7 +8,7 @@ class CreateReleases < ActiveRecord::Migration
       t.date :start
       t.date :stop
       t.date :plan_stop
-      t.boolean :active
+      t.boolean :active, :default => false, :null => false
 
       t.timestamps
     end

@@ -6,7 +6,7 @@ class CreateMetrics < ActiveRecord::Migration
       t.string :color
       t.string :tab_name
       t.integer :pos
-      t.boolean :active
+      t.boolean :active, :default => false, :null => false
     end
   end
 

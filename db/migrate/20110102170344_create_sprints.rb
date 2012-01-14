@@ -8,7 +8,7 @@ class CreateSprints < ActiveRecord::Migration
       t.string :description
       t.date :start
       t.date :stop
-      t.boolean :active
+      t.boolean :active, :default => false, :null => false
 
       t.timestamps
     end
