@@ -1,6 +1,6 @@
 function initSync() {
     $("#sync")
-        .popover({ trigger:"manual", html:true, animate:true })
+        .popover({ trigger:"manual", html:true, animate:true, offset: 15 })
         .click(function () {
             var  el   = $(this);
             var _data = el.attr('alt');

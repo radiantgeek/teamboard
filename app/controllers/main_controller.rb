@@ -66,7 +66,7 @@ class MainController < ApplicationController
     all = MetricData.by_metric(@metric.id)
     all.each { |a| res.push([a.time.to_time.to_i*1000, a.res]) }
 
-    {"key" => @metric.tab_name+"/"+@metric.name, "label" => @metric.title + " =  000.00", "data" => res, "color" => @metric.color}
+    {"key" => "/"+@metric.tab_name+"/"+@metric.name, "label" => @metric.title + " =  000.00", "data" => res, "color" => @metric.color}
   end
 
   def _initTab()
