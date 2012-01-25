@@ -93,6 +93,29 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model Team do
+    edit do
+      field :name
+      field :title
+      field :alpha
+      field :active
+      field :users
+    end
+  end
+
+  config.model User do
+    list do
+
+      filters [:id, :real_name, :email, :team, :can_login]
+      sort_by :name
+      sort_reverse false
+    end
+    edit do
+      field :real_name
+      field :email
+      field :team
+    end
+  end
 
   # Your model's configuration, to help you get started:
 

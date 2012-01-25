@@ -4,5 +4,8 @@ $gridGutterWidth: 20px;
 
 @import "bootstrap"; /* Use this to get all of Bootstrap's @mixins and $variables */
 
-
 body {padding-top: 45px;}
+
+#team_plan tr:hover td {
+      background-color: #dfedf5;
+}

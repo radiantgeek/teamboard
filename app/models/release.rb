@@ -1,3 +1,5 @@
+require 'workers'
+
 class Release < ActiveRecord::Base
   validates_presence_of :name, :title
   validates_uniqueness_of :name
@@ -13,7 +15,16 @@ class Release < ActiveRecord::Base
     version.gsub(/\./, "")
   end
 
+  def dreType(type)
+    i = DRE.new("", start, stop, type).calc
+    return "--" if i.nan?
+    "%.3f" % i
+  end
+
   def to_s
     title
   end
+
+  private
+  include Workers
 end

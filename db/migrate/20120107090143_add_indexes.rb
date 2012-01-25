@@ -5,6 +5,7 @@ class AddIndexes < ActiveRecord::Migration
     add_index(:bugs, :status, :length => 10)
     add_index(:bugs, :milestone)
 
+    add_index(:users, :team_id)
     add_index(:users, :email)
     add_index(:users, :name)
 

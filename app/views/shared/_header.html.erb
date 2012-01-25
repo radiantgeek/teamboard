@@ -14,7 +14,7 @@
   <div class="topbar-inner">
 
     <div class="container">
-      <a class="brand" href="/">Teamboard</a>
+      <a class="brand pull-left" href="/">Teamboard</a>
       <ul class="nav">
         <% quickLinks.each do |q| %>
             <li><a href="<%= q.link %>" target="_blank"><%= q.name %></a></li>
@@ -26,7 +26,11 @@
         <input name="quicksearch" type="text" placeholder="Search @ bugzilla">
       </form>
 
-      <a id="sync" alt="/sync/" data-title="Synchronization" data-placement="below" rel="popover" class="pull-right btn active" href="#">Synchronize</a>
+      <ul class="nav pull-right">
+        <li>
+      <a id="sync" alt="/sync/" data-title="Synchronization" data-placement="below" rel="popover" href="#"><span class="label warning">Sync</span></a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

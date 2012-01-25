@@ -1,80 +1,83 @@
 <h1><%= @release.title %></h1>
 <h2>Burndown chart</h2>
 
-<table id="releasetable">
-  <tr>
-    <td width="60%" colspan="2" valign="top">
-      <div id="burndown" style="width:700px;height:300px; border: 1px solid gray;"/>
-    </td>
-    <td valign="top">
+<%= @dre %>
+<%= @dre1 %>
 
-      <table class="bordered-table zebra-striped" id="releasedata">
-        <thead>
-        <tr>
-          <th>Start</th>
-          <th>Stop [plan]</th>
-          <th color="red">Stop [actual]</th>
-        </tr>
-        </thead>
-        <tr>
-          <td><%= @release.start %></td>
-          <td><%= @release.plan_stop %></td>
-          <td color="red"><%= @release.stop %></td>
-        </tr>
-      </table>
+<div class="row show-grid">
+  <div class="span11">
+    <div id="plot_placeholder" class="thumbnail" style="height:300px; border: 1px solid gray;"></div>
+  </div>
 
-      <table class="bordered-table zebra-striped" id="bugsdata">
-        <thead>
-        <tr>
-          <th>Team</th>
-          <th>plan</th>
-          <th>fixed</th>
-          <th>solved</th>
-          <th>unfixed</th>
-        </tr>
-        </thead>
+  <div class="span7">
+    <table class="bordered-table zebra-striped" id="release_data">
+      <thead>
+      <tr>
+        <th>Start</th>
+        <th>Stop [<i>plan</i>]</th>
+        <th>Stop [actual]</th>
+      </tr>
+      </thead>
+      <tr>
+        <td><%= @release.start %></td>
+        <td><%= @release.plan_stop %></td>
+        <td style="color: red"><%= @release.stop %></td>
+      </tr>
+    </table>
 
-        <tr>
-          <td>Total</td>  <%= tdval "plan" %>       <%= tdval "fixed" %>      <%= tdval "solved" %>       <%= tdval "unfixed" %>
-        </tr>
-        <tr>
-          <td>Java</td>   <%= tdval "planjava" %>   <%= tdval "fixedjava" %>  <%= tdval "solvedjava" %>  <%= tdval "unfixedjava" %>
-        </tr>
-        <tr>
-          <td>Oracle</td> <%= tdval "planoracle" %><%= tdval "fixedoracle" %> <%= tdval "solvedoracle" %><%= tdval "unfixedoracle" %>
-        </tr>
-        <tr>
-          <td>C++</td>    <%= tdval "plancpp" %>    <%= tdval "fixedcpp" %>   <%= tdval "solvedcpp" %>   <%= tdval "unfixedcpp" %>
-        </tr>
+    <table class="bordered-table zebra-striped" id="release_metric">
+      <thead>
+      <tr>
+        <th><i>DRE</i></th>
+        <th>Full</th>
+        <th>@Release</th>
+        <th>8 week after</th>
+      </tr>
+      </thead>
+      <tr>
+        <th>All bugs</th>
+        <td><%= @release.dreType(1) %></td>
+        <td><%= @release.dreType(3) %></td>
+        <td><%= @release.dreType(5) %></td>
+      </tr>
+      <tr>
+        <th>Serious</th>
+        <td><%= @release.dreType(2) %></td>
+        <td><%= @release.dreType(4) %></td>
+        <td><%= @release.dreType(6) %></td>
+      </tr>
+    </table>
 
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td width="30%" valign="top">
-      <h3>Burndown chart [Java]</h3>
+    <table class="bordered-table zebra-striped" id="team_plan">
+      <thead>
+      <tr>
+        <th>Team</th>
+        <th>plan</th>
+        <th>fixed</th>
+        <th>solved</th>
+        <th>unfixed</th>
+      </tr>
+      </thead>
 
-      <div id="burndownjava" style="width:400px;height:200px; border: 1px solid gray;"/>
-    </td>
-    <td width="30%" valign="top">
-      <h3>Burndown chart [Oracle]</h3>
+      <tr class="data">
+        <td>Total</td>  <%= tdval "plan" %>       <%= tdval "fixed" %>      <%= tdval "solved" %>       <%= tdval "unfixed" %>
+      </tr>
+      <tr class="data">
+        <td>Java</td>   <%= tdval "planjava" %>   <%= tdval "fixedjava" %>  <%= tdval "solvedjava" %>  <%= tdval "unfixedjava" %>
+      </tr>
+      <tr class="data">
+        <td>Oracle</td> <%= tdval "planoracle" %><%= tdval "fixedoracle" %> <%= tdval "solvedoracle" %><%= tdval "unfixedoracle" %>
+      </tr>
+      <tr class="data">
+        <td>C++</td>    <%= tdval "plancpp" %>    <%= tdval "fixedcpp" %>   <%= tdval "solvedcpp" %>   <%= tdval "unfixedcpp" %>
+      </tr>
+    </table>
+    <small>click at row to see diagram</small>
 
-      <div id="burndownoracle" style="width:400px;height:200px; border: 1px solid gray;"/>
-    </td>
-    <td valign="top">
-      <h3>Burndown chart [C++]</h3>
-
-      <div id="burndowncpp" style="width:400px;height:200px; border: 1px solid gray;"/>
-    </td>
-  </tr>
-</table>
-<br/>
-
-<script type="text/javascript" charset="utf-8">
-    $(function () {
-//        installKeyPlot('burndown', ['plan', 'fixed', 'solved', 'unfixed']);
-//        installSmallKeyPlot('burndownjava', ['planjava', 'fixedjava', 'solvedjava', 'unfixedjava']);
-//        installSmallKeyPlot('burndownoracle', ['planoracle', 'fixedoracle', 'solvedoracle', 'unfixedoracle']);
-//        installSmallKeyPlot('burndowncpp', ['plancpp', 'fixedcpp', 'solvedcpp', 'unfixedcpp']);
-    });
-</script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            installReleasePlot('plot_placeholder', 'team_plan');
+        });
+    </script>
+  </div>
+</div>

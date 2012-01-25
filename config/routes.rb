@@ -12,14 +12,14 @@ Teamboard::Application.routes.draw do
   match "release" => "sprint#release", :as => :release
   match "release/:release" => "sprint#release"
 
-  match "history/:bug" => "team#history", :as => :history
-  match "changes/:bug" => "team#changes", :as => :changes
-  match "comments/:bug" => "team#comments", :as => :comments
+  match "history/:bug" => "changes#history", :as => :history
+  match "changes/:bug" => "changes#changes", :as => :changes
+  match "comments/:bug" => "changes#comments", :as => :comments
 
   match ':tab/:metric/link' => 'main#link', :as => :link_metric
   match ':tab/:metric/data' => 'main#data', :as => :data_metric
-  match ':tab/:metric' => 'main#metric', :as => :show_metric
-  match ':tab' => 'main#tab', :as => :show_tab
+  match ':tab/:metric' => 'main#metric', :as => :metric
+  match ':tab' => 'main#tab', :as => :tab
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

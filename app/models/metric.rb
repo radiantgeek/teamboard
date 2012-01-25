@@ -7,6 +7,14 @@ class Metric < ActiveRecord::Base
   scope :actived, :conditions => ["active = ?", true]
   scope :tab, lambda { |tab_name| {:conditions => {:tab_name => tab_name}, :order => "pos ASC"} }
 
+  def color=(col)
+    if (col.length == 6) # from rails_admin's color picker
+      col = "rgb("+col[0, 2].hex.to_s+", "+col[2, 2].hex.to_s+", "+col[4, 2].hex.to_s+")"
+    end
+
+    self[:color] = col
+  end
+
   def columns
     @metric_class.columns
   end

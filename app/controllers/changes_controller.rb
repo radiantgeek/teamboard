@@ -1,6 +1,6 @@
 require 'bugzilla'
 
-class TeamController < ApplicationController
+class ChangesController < ApplicationController
   respond_to :html, :json
 
   def comments

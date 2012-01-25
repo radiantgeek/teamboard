@@ -27,7 +27,7 @@ class SyncController < ApplicationController
     good = 0
     @worker = Workers.new
 
-    Metric.all.each { |m|
+    Metric.actived.all.each { |m|
       m.metricClass=@worker.get(m.name)
 
       calc = m.calculate_count

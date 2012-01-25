@@ -1,11 +1,11 @@
 function initSync() {
     $("#sync")
-        .popover({ trigger:"manual", html:true, animate:true, offset: 15 })
+        .popover({ trigger:"manual", html:true, animate:true, offset:15 })
         .click(function () {
-            var  el   = $(this);
+            var el = $(this);
             var _data = el.attr('alt');
             $.ajax({
-                type: 'GET', url: _data, dataType: 'html',
+                type:'GET', url:_data, dataType:'html',
                 success:function (data) {
                     el.attr('data-content', data);
                     el.attr('trigger', "hover");
@@ -17,23 +17,23 @@ function initSync() {
 
 function loadAjaxMetric(key, onDataReceived) {
     $.ajax({
-        method: 'GET', dataType: 'json', success: onDataReceived,
-        url: key + "/data.json"
+        method:'GET', dataType:'json', success:onDataReceived,
+        url:key + "/data.json"
     });
 }
 
 function timeCommonOption() {
-    return { legend: false,
-        lines: { show: true },  points: { show: true },
-        xaxis: { mode: "time" }, yaxis: { min: 0 }
+    return { legend:false,
+        lines:{ show:true }, points:{ show:true },
+        xaxis:{ mode:"time" }, yaxis:{ min:0 }
     };
 }
 
 function timeOption() {
     var p = {
-        crosshair: { mode:"x" },
-        selection: { mode:"x" },
-        grid: { hoverable:true, autoHighlight:false }
+        crosshair:{ mode:"x" },
+        selection:{ mode:"x" },
+        grid:{ hoverable:true, autoHighlight:false }
     };
     $.extend(p, timeCommonOption());
     return p;
@@ -176,5 +176,18 @@ function installChoicePlot(plot_placeholder, choiceTable, key) {
         });
         plotter(keys);
     }
+
+}
+
+function installReleasePlot(plot_placeholder, table_name) {
+    var plotter = installPlotFunc(timeOption(), plot_placeholder, loadAjaxMetric);
+
+    $('#' + table_name + ' tr').click(function (event) {
+        keys = $("a", $(this)).map(function () {
+            s = $(this).attr("href")
+            return s.substr(0, s.length - 1)
+        })
+        plotter(keys);
+    });
 
 }

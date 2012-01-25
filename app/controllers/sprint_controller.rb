@@ -13,11 +13,11 @@ class SprintController < ApplicationController
 
     @sprint = Sprint.find_by_name(params[:sprint]) if params[:sprint]
     if @sprint
-	@build = @sprint.build
-	@build = @sprint.previous.build if @sprint.active
+      @build = @sprint.build
+      @build = @sprint.previous.build if @sprint.active
     else
-	@sprint = Sprint.actived.first 
-	@build = @sprint.previous.build 
+      @sprint = Sprint.actived.first
+      @build = @sprint.previous.build
     end
     @release = @sprint.release
 
@@ -60,11 +60,11 @@ class SprintController < ApplicationController
     # цвета разным компонентам?
 
     if @sprint.active
-   	@reopen = all(reopen()+fromJava()) + all(reopen+getJava())
-	@needinfo = all(needinfodevtest()+fromJava()) + all(needinfodevtest()+getJava())
+      @reopen = all(reopen()+fromJava()) + all(reopen+getJava())
+      @needinfo = all(needinfodevtest()+fromJava()) + all(needinfodevtest()+getJava())
     else
-	@reopen = []
-	@needinfo = []
+      @reopen = []
+      @needinfo = []
     end
 
     @planned = onlySprint(accepted())

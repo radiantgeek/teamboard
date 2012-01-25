@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
       t.boolean :can_login
       t.boolean :email_enabled
-
+      t.integer :team_id
       t.timestamps
     end
   end

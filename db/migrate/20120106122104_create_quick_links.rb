@@ -8,4 +8,5 @@ class CreateQuickLinks < ActiveRecord::Migration
       t.timestamps
     end
   end
+
 end

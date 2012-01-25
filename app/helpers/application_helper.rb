@@ -19,7 +19,6 @@ module ApplicationHelper
   end
 
   def tdval(metric)
-
     m = Metric.find_by_name(metric + @release._metric) if @release
 
     c = "-"
@@ -29,6 +28,7 @@ module ApplicationHelper
       c = m.calculate_count.to_s if cl
     end
 
-    raw "<td><a href='"+m.tab_name+"/"+m.name+"/'>"+c+"</a></td>"
+    raw "<td><a href='/"+m.tab_name+"/"+m.name+"/'>"+c+"</a></td>"
   end
+
 end
