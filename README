@@ -1,17 +1,17 @@
 == Teamboard
 
-Quick&dirty implementation of dashboard for Bugzilla 3.6+
+Simple dashboard for Bugzilla 3.6+
 
 Features:
 
 * Independent from Bugzilla database with auto synchronization [not cron]
 * Collect and show charts of statistical data 
-* Sprint and release dashboards
+* Dashboard for releases and sprints
 * Admin UI
 
 Dependencies:
 
-* Rails 3.1
+* Rails 3.2
 * gem rails_admin for admin interface
 * gem devise for user management
 * gem bootstrap-sass [for Twitter's bootstrap css framework]

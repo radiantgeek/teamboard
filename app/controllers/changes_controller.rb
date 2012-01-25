@@ -28,7 +28,7 @@ class ChangesController < ApplicationController
   #
   def printMini(table, template)
     @table = table.sort_by { |a| a[:when].to_time }.reverse
-    render :template => 'team/'+template, :layout => 'mini'
+    render :template => 'changes/'+template, :layout => 'mini'
   end
 
 
