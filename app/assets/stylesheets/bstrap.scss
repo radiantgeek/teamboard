@@ -9,3 +9,12 @@ body {padding-top: 45px;}
 #team_plan tr:hover td {
       background-color: #dfedf5;
 }
+
+.selected, table.bordered-table tbody tr.selected td { /* css priority */
+    background-color: #bbffbb;
+}
+
+#ajax_loading {
+  width: 16px; height: 16px;  display: none;
+  position: absolute; left: 200px; top: 50px;
+}

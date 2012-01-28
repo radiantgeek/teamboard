@@ -76,7 +76,14 @@
 
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
+            $('#team_plan tr').click(function (event) {
+                $('#team_plan tr.selected').toggleClass("selected"); // clear old selection
+                $(this).toggleClass("selected"); // new selection
+            });
+
             installReleasePlot('plot_placeholder', 'team_plan');
+
+            $($('#team_plan tr')[1]).click(); // autoselect first row
         });
     </script>
   </div>
