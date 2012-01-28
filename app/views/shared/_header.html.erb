@@ -7,6 +7,7 @@
 
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
 </head>
 <body>
 
@@ -15,6 +16,8 @@
 
     <div class="container">
       <a class="brand pull-left" href="/">Teamboard</a>
+      <img id="ajax_loading" src="/images/ajax-loading.gif"/>
+
       <ul class="nav">
         <% quickLinks.each do |q| %>
             <li><a href="<%= q.link %>" target="_blank"><%= q.name %></a></li>
@@ -28,9 +31,14 @@
 
       <ul class="nav pull-right">
         <li>
-      <a id="sync" alt="/sync/" data-title="Synchronization" data-placement="below" rel="popover" href="#"><span class="label warning">Sync</span></a>
+          <a id="sync" alt="/sync/" data-title="Synchronization" data-placement="below" rel="popover" href="#"><span class="label warning">Sync</span></a>
         </li>
       </ul>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+    $("#ajax_loading").ajaxStart(function () { $(this).show(); });
+    $("#ajax_loading").ajaxStop(function () { $(this).hide(); });
+</script>

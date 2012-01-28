@@ -26,9 +26,11 @@ module ApplicationHelper
       cl=@worker.get(m.name) unless m.metricClass # link with worker
       m.metricClass=cl
       c = m.calculate_count.to_s if cl
+
+      c = "<a href='/"+m.tab_name+"/"+m.name+"/'>"+c+"</a>"
     end
 
-    raw "<td><a href='/"+m.tab_name+"/"+m.name+"/'>"+c+"</a></td>"
+    raw "<td>"+c+"</td>"
   end
 
 end

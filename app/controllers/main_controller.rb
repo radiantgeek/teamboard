@@ -89,7 +89,7 @@ class MainController < ApplicationController
   end
 
   def readDataTableParameters
-    @search = '%'+params[:sSearch]+'%' if params[:sSearch]
+    @search = '%'+params[:sSearch]+'%' if params[:sSearch] && !params[:sSearch].empty?
     @offset = params[:iDisplayStart].to_i if params[:iDisplayStart]
     @per_page = params[:iDisplayLength]
 

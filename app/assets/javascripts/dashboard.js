@@ -7,9 +7,10 @@ function initSync() {
             $.ajax({
                 type:'GET', url:_data, dataType:'html',
                 success:function (data) {
-                    el.attr('data-content', data);
+                    el.attr('data-content', data+"\n<br/>Page will be reload in 5 sec.");
                     el.attr('trigger', "hover");
                     el.popover('show');
+                    window.setTimeout(function(){ location.reload() }, 5000);
                 }
             });
         });
@@ -154,9 +155,9 @@ function installChoicePlot(plot_placeholder, choiceTable, key) {
 
     var choiceContainer = $("#" + choiceTable);
     choiceContainer.find("input").click(plotAccordingToChoices);
-    $("#" + choiceTable + "update").click(plotAccordingToChoices);
-    $("#" + choiceTable + "checkall").click(checkAll(choiceContainer, '', true));
-    $("#" + choiceTable + "uncheckall").click(checkAll(choiceContainer, '', false));
+    $("#" + choiceTable + "_update").click(plotAccordingToChoices);
+    $("#" + choiceTable + "_checkall").click(checkAll(choiceContainer, '', true));
+    $("#" + choiceTable + "_uncheckall").click(checkAll(choiceContainer, '', false));
 
     function checkAll(table, name, flag) {
         return function () {
