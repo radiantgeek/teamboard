@@ -16,8 +16,10 @@ Teamboard::Application.routes.draw do
   match "changes/:bug" => "changes#changes", :as => :changes
   match "comments/:bug" => "changes#comments", :as => :comments
 
-  match ':tab/:metric/link' => 'main#link', :as => :link_metric
+  match "release/:release/:metric" => "main#metric"
+  match "release/:release/:metric/data" => "main#data"
   match ':tab/:metric/data' => 'main#data', :as => :data_metric
+  match ':tab/:metric/link' => 'main#link', :as => :link_metric
   match ':tab/:metric' => 'main#metric', :as => :metric
   match ':tab' => 'main#tab', :as => :tab
 

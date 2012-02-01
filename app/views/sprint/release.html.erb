@@ -6,7 +6,7 @@
 
 <div class="row show-grid">
   <div class="span11">
-    <div id="plot_placeholder" class="thumbnail" style="height:300px; border: 1px solid gray;"></div>
+    <div id="plot_placeholder" class="thumbnail" style="height:300px; "></div>
   </div>
 
   <div class="span7">
@@ -81,7 +81,8 @@
                 $(this).toggleClass("selected"); // new selection
             });
 
-            installReleasePlot('plot_placeholder', 'team_plan');
+            installReleasePlot('plot_placeholder', 'team_plan', '<%= @release.start %>', '<%= @release.stop %>');
+//            testReleasePlot('plot_placeholder', 'team_plan', '<%= @release.start %>', '<%= @release.stop %>');
 
             $($('#team_plan tr')[1]).click(); // autoselect first row
         });

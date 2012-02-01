@@ -27,7 +27,7 @@ module ApplicationHelper
       m.metricClass=cl
       c = m.calculate_count.to_s if cl
 
-      c = "<a href='/"+m.tab_name+"/"+m.name+"/'>"+c+"</a>"
+      c = "<a href='/release/"+@release.name+"/"+m.name+"/'>"+c+"</a>"
     end
 
     raw "<td>"+c+"</td>"

@@ -42,6 +42,7 @@ class SprintController < ApplicationController
   end
 
   private
+
   include Workers
   include WorkersUtils
 

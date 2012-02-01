@@ -7,10 +7,12 @@ function initSync() {
             $.ajax({
                 type:'GET', url:_data, dataType:'html',
                 success:function (data) {
-                    el.attr('data-content', data+"\n<br/>Page will be reload in 5 sec.");
+                    el.attr('data-content', data + "\n<br/>Page will be reload in 5 sec.");
                     el.attr('trigger', "hover");
                     el.popover('show');
-                    window.setTimeout(function(){ location.reload() }, 5000);
+                    window.setTimeout(function () {
+                        location.reload()
+                    }, 5000);
                 }
             });
         });
@@ -24,9 +26,12 @@ function loadAjaxMetric(key, onDataReceived) {
 }
 
 function timeCommonOption() {
-    return { legend:false,
-        lines:{ show:true }, points:{ show:true },
-        xaxis:{ mode:"time" }, yaxis:{ min:0 }
+    return {
+        legend:false,
+        lines:{ show:true },
+        points:{ show:true },
+        xaxis:{ mode:"time" },
+        yaxis:{ min:0 }
     };
 }
 
@@ -49,70 +54,14 @@ function setCheckboxes(container, value) {
     $('#' + tableName).dataTable(p);
 }
 
-//---------------------------------------------------------------------------
-function updateLegend(plot, legends, latestPosition) {
-    if (plot == null)
-        return;
-    var pos = latestPosition;
-
-    var axes = plot.getAxes();
-    if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max ||
-        pos.y < axes.yaxis.min ||
-        pos.y > axes.yaxis.max)
-        return;
-
-    var i, j, dataset = plot.getData();
-    for (i = 0; i < dataset.length; ++i) {
-        var series = dataset[i];
-
-        // find the nearest points, x-wise
-        for (j = 0; j < series.data.length; ++j)
-            if (series.data[j][0] > pos.x)
-                break;
-
-        // now interpolate
-        var y, p1 = series.data[j - 1], p2 = series.data[j];
-        if (p1 == null)
-            y = p2[1];
-        else if (p2 == null)
-            y = p1[1];
-        else
-            y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
-
-        legends.eq(i).text(series.label.replace(/=.*/, "= " + y.toFixed(1)));
-    }
-}
-
 
 function installPlotFunc(options, plot_placeholder, loadKey) {
     var data = [];
     var datasets = {};
-    var placeholder = $("#" + plot_placeholder);
-    var plot = null;
-    var legends = null;
 
     // plotter
     function doPlot() {
-        plot = $.plot(placeholder, data, options);
-
-        legends = $("#" + plot_placeholder + " .legendLabel");
-        legends.each(function () {
-            // fix the widths so they don't jump around
-            $(this).css('width', $(this).width());
-        });
-    }
-
-    // hover for legends
-    var updateLegendTimeout = null;
-    var latestPosition = null;
-    placeholder.bind("plothover", function (event, pos, item) {
-        latestPosition = pos;
-        if (!updateLegendTimeout)
-            updateLegendTimeout = setTimeout(updatePlotLegend, 50);
-    });
-    function updatePlotLegend() {
-        updateLegendTimeout = null;
-        updateLegend(plot, legends, latestPosition);
+        showPlot(plot_placeholder, data)
     }
 
     // loading
@@ -180,8 +129,16 @@ function installChoicePlot(plot_placeholder, choiceTable, key) {
 
 }
 
-function installReleasePlot(plot_placeholder, table_name) {
-    var plotter = installPlotFunc(timeOption(), plot_placeholder, loadAjaxMetric);
+function installReleasePlot(plot_placeholder, table_name, start, stop) {
+    // setup background areas
+    d1 = Date.parse(start).valueOf()
+    d2 = Date.parse(stop).valueOf()
+    var markings = [
+        { color:'#000', lineWidth:1, xaxis:{ from:d1, to:d1 } },
+
+        { color:'#000', lineWidth:1, xaxis:{ from:d2, to:d2 } }
+    ];
+    var plotter = installPlotFunc("oldoptions", plot_placeholder, loadAjaxMetric);
 
     $('#' + table_name + ' tr').click(function (event) {
         keys = $("a", $(this)).map(function () {
@@ -190,5 +147,43 @@ function installReleasePlot(plot_placeholder, table_name) {
         })
         plotter(keys);
     });
+}
 
+function showPlot(placeholder, data) {
+    // define the options
+    var options = {
+        title:{ text:""},
+        chart:{
+            renderTo:placeholder,
+            zoomType:'x',
+            defaultSeriesType:'line'
+        },
+        xAxis:{
+            type:'datetime',
+            gridLineWidth:1,
+            labels:{
+                align:'left',
+                x:3,
+                y:3
+            },
+            plotLines:[
+                {value:Date.parse("2011-06-01"), width:1, color:'#ff8080'}
+            ],
+            maxZoom: 7 * 24 * 3600000 // 7 days
+        },
+        yAxis:{
+            title:"",
+            min:0
+        },
+        legend:{ enabled:false },
+        tooltip:{
+            formatter:function () {
+                return this.y;
+            }
+        },
+        series:[]
+    };
+    options.series = data
+    chart = new Highcharts.Chart(options);
+    return chart
 }

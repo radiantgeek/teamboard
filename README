@@ -16,3 +16,4 @@ Dependencies:
 * gem devise for user management
 * gem bootstrap-sass [for Twitter's bootstrap css framework]
 * jQuery, jQuery UI, jQuery data_table
+* Highcharts

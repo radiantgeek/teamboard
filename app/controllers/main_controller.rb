@@ -15,7 +15,7 @@ class MainController < ApplicationController
   end
 
   def tab
-    _initTab
+    _init
 
     @tab.metrics.each { |m| m.metricClass=@worker.get(m.name) } # link with worker
 
@@ -64,23 +64,50 @@ class MainController < ApplicationController
   def _data
     res = Array.new
     all = MetricData.by_metric(@metric.id)
-    all.each { |a| res.push([a.time.to_time.to_i*1000, a.res]) }
 
-    {"key" => "/"+@metric.tab_name+"/"+@metric.name, "label" => @metric.title + " =  000.00", "data" => res, "color" => @metric.color}
+    if @release
+      start = @release.start-40 # 40 days
+      stop = @release.stop+7*8 # 8 weeks?
+      all = all.where(:time => [start..stop]) if @release
+    end
+
+    min = all.last.time.to_datetime.to_i
+    max = all.first.time.to_datetime.to_i
+    dt = (max-min)/400 # return only 400 points
+    prev = max+2*dt
+    all.each { |a|
+      t = a.time.to_datetime.to_i
+      if (prev-t)>dt
+        res.push([t*1000, a.res])
+        prev = t
+      end
+    }
+
+    path = "/"+@metric.tab_name+"/"
+    path = "/release/"+@release.name+"/" if @release
+
+    {"key" => path+@metric.name, "name" => @metric.title,  "type" => "spline", "color" => _color(@metric.color), "data" => res}
   end
 
-  def _initTab()
-    ActiveRecord::Base.logger = Logger.new(STDERR)
-    @worker = Workers.new # should be singleton
-
-    @tab = Tab.find_by_name(params[:tab])
+  def _color(c)
+    c.gsub!("rgb(", "").gsub!(")", "")
+    a=c.split(",")
+    a.collect! { |o| "%02x" % o.to_i }
+    "#"+a.join("")
   end
 
   def _init
-    _initTab()
-    @metric = Metric.where(:tab_name => @tab.name, :name => params[:metric]).first
+    ActiveRecord::Base.logger = Logger.new(STDERR)
+    @worker = Workers.new # should be singleton
 
-    @metric.metricClass=@worker.get(@metric.name) # link with worker
+    @tab = Tab.find_by_name(params[:tab]) if params[:tab]
+
+    @release = Release.find_by_name(params[:release]) if params[:release]
+
+    @metric = Metric.where(:name => params[:metric]).first if params[:metric]
+    @metric.metricClass=@worker.get(@metric.name) if @metric # link with worker
+
+    @tab = Tab.find_by_name(@metric.tab_name) unless @tab
   end
 
   # all bugs for metric
