@@ -17,7 +17,8 @@ class SprintController < ApplicationController
       @build = @sprint.previous.build if @sprint.active
     else
       @sprint = Sprint.actived.first
-      @build = @sprint.previous.build
+      @build = @sprint.build
+      @build = @sprint.previous.build if @sprint.previous
     end
     @release = @sprint.release
 
